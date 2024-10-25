@@ -1,8 +1,16 @@
 const MyComponent = () => {
+    const hieppu = 'hieppuuu';
     return (
-        <div>
-            hieppu
-        </div>
+        <>
+            <div>hi {hieppu}</div>
+            <div className='child' style={
+                {
+                    borderRadius: "10px",
+                    color: "red"
+                }
+            }>hieppu</div>
+        </>
+
     );
 }
 
