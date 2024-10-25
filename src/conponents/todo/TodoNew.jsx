@@ -1,9 +1,10 @@
 
-const TodoNew = () => {
+const TodoNew = (props) => {
+    const { addNewTodo } = props
     return (
         <div className='todo-new'>
             <input type="text"></input>
-            <button class>Add</button>
+            <button onClick={addNewTodo('hip')}>Add</button>
         </div>
     );
 }

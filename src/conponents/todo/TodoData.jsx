@@ -2,6 +2,7 @@
 
 const TodoData = (props) => {
     const { name, age, data } = props;
+
     return (
         <div className='todo-data'>
             <div>my Name is {name}</div>
