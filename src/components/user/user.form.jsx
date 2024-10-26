@@ -10,11 +10,19 @@ const UserForm = () => {
 
     const handleClickBtn = async () => {
         const res = await createUserAPI(fullName, email, password, phone);
-        if (res.data)
+        debugger
+        if (res.data) {
             notification.success({
                 message: "OK",
-                description: "OK nhe "
+                description: "OK nhé "
             });
+        } else {
+            notification.error({
+                message: "NG",
+                description: JSON.stringify(res.message)
+            });
+        }
+
     };
     return (
         <div className="user-form" style={{ margin: "20px 0" }}>
