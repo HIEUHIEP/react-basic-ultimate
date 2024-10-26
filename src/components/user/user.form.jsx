@@ -10,7 +10,7 @@ const UserForm = () => {
 
     const handleClickBtn = async () => {
         const res = await createUserAPI(fullName, email, password, phone);
-        debugger
+        // debugger
         if (res.data) {
             notification.success({
                 message: "OK",
