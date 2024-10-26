@@ -1,7 +1,7 @@
 
 
 const TodoData = (props) => {
-    const { todoList } = props;
+    const { todoList, removeTodo } = props;
 
     return (
         <div className='todo-data'>
@@ -9,7 +9,7 @@ const TodoData = (props) => {
                 return (
                     <div className={`todo-item`} key={item.id}>
                         <div>{item.name}</div>
-                        <button>Delete</button>
+                        <button onClick={() => removeTodo(item.id)}>Delete</button>
 
                     </div>
                 )
