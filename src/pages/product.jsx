@@ -1,7 +1,7 @@
 
 const ProductPage = () => {
     return (
-        <div>Register pageeee</div>
+        <div>Product pageeee</div>
     )
 }
 
