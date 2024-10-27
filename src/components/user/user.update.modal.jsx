@@ -30,7 +30,7 @@ const UserUpdateModal = (props) => {
         } else {
             notification.error({
                 message: "NG",
-                description: JSON.stringify(res.message)
+                description: "Update NG rồi"
             });
         }
 
