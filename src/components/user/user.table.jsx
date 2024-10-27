@@ -1,9 +1,10 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Table } from 'antd';
+import { notification, Popconfirm, Table } from 'antd';
 import UserUpdateModal from './user.update.modal';
 import { useState } from 'react';
 import UserViewModal from './user.view.modal';
 import { Link } from 'react-router-dom';
+import { deleteUserAPI } from '../../services/api.service';
 
 const UserTable = (props) => {
     const { dataUser, loadUser } = props;
@@ -11,6 +12,21 @@ const UserTable = (props) => {
     const [isModalViewOpen, setIsModalViewOpen] = useState(false);
     const [dataUpdate, setDataUpdate] = useState({});
     const [dataView, setDataView] = useState({});
+    const handleDeleteBtn = async (id) => {
+        const res = await deleteUserAPI(id);
+        if (res.data) {
+            notification.success({
+                message: "OK",
+                description: " Delete OK"
+            })
+        } else {
+            notification.error({
+                message: "NG",
+                description: JSON.stringify(res.message)
+            })
+        };
+        await loadUser();
+    };
     const columns = [
         {
             title: 'Id',
@@ -41,7 +57,18 @@ const UserTable = (props) => {
                             setDataUpdate(record);
                         }}
                     />
-                    <DeleteOutlined style={{ cursor: "pointer", color: "red", fontSize: "20px" }} />
+                    <Popconfirm
+                        placement="left"
+                        title="Delete the user"
+                        description="Are you sure to delete this user?"
+                        onConfirm={() => { handleDeleteBtn(record._id) }}
+                        // onCancel={ }
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <DeleteOutlined danger style={{ cursor: "pointer", color: "red", fontSize: "20px" }} />
+                    </Popconfirm>
+
                 </div>
             ),
         },
