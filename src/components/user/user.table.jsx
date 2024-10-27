@@ -24,7 +24,7 @@ const UserTable = (props) => {
                 message: "NG",
                 description: JSON.stringify(res.message)
             })
-        };
+        }
         await loadUser();
     };
     const columns = [
