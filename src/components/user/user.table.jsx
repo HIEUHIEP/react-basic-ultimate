@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { deleteUserAPI } from '../../services/api.service';
 
 const UserTable = (props) => {
-    const { dataUser, loadUser } = props;
+    const { dataUser, loadUser, current, setCurrent, pageSize, setPageSize, total } = props;
     const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
     const [isModalViewOpen, setIsModalViewOpen] = useState(false);
     const [dataUpdate, setDataUpdate] = useState({});
@@ -32,7 +32,7 @@ const UserTable = (props) => {
             title: 'STT',
             render: (_, record, index) => {
                 return (
-                    <>{index + 1}</>
+                    <>{(index + 1) + (current - 1) * pageSize}</>
                 )
             },
         },
@@ -81,6 +81,17 @@ const UserTable = (props) => {
             ),
         },
     ];
+
+    const onChange = (pagination, filters, sorter, extra) => {
+        console.log({ pagination, filters, sorter, extra })
+        if (+pagination.current !== +current) {
+            setCurrent(+pagination.current);
+        }
+        if (+pagination.pageSize !== +pageSize) {
+            setPageSize(+pagination.pageSize);
+        }
+    };
+
     return (
         <>
             <UserUpdateModal
@@ -101,6 +112,17 @@ const UserTable = (props) => {
                 columns={columns}
                 dataSource={dataUser}
                 rowKey={"_id"}
+                pagination={
+                    {
+                        current: current,
+                        pageSize: pageSize,
+                        showSizeChanger: true, // show pulldown select number record on 1page.
+                        total: total,
+                        showTotal: (total, range) => { return (<div> {range[0]}-{range[1]} / {total} rows</div>) },
+                    }
+
+                }
+                onChange={onChange}
             />
         </>
     )
