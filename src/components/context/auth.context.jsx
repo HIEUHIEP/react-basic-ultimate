@@ -21,6 +21,7 @@ const AuthWrapper = (props) => {
     return (
         <AuthContext.Provider value={{ user, setUser }}>
             {props.children}
+            {/* props.children chính là <RouterProvider router={router} />  đc truyền từ mail.jsx*/}
         </AuthContext.Provider>
     )
 }
