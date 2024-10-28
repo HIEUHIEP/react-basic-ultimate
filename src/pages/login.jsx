@@ -2,11 +2,13 @@ import { ArrowRightOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Row, Col, Divider, message, notification } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { loginAPI } from "../services/api.service";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../components/context/auth.context";
 
 const LoginPage = () => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
+    const { setUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const onFinish = async (values) => {
@@ -14,6 +16,8 @@ const LoginPage = () => {
         const res = await loginAPI(values.email, values.password)
         if (res.data) {
             message.success("Login OK")
+            localStorage.setItem("access_token", res.data.access_token);
+            setUser(res.data.user);
             navigate("/");
         } else {
             notification.error({
