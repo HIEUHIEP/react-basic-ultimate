@@ -1,18 +1,37 @@
-import { Link } from 'react-router-dom';
-import { Menu } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
+import { Menu, message } from 'antd';
 import { UserOutlined, HomeOutlined, BookOutlined, LoginOutlined, WechatOutlined } from '@ant-design/icons';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../context/auth.context';
+import { logoutAPI } from '../../services/api.service';
 // import './header.css'
 const Header = () => {
     const [current, setCurrent] = useState('');
-    const { user } = useContext(AuthContext);
-
+    const { user, setUser } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const onClick = (e) => {
         // console.log('click ', e);
         setCurrent(e.key);
     };
+    const handleLogout = async () => {
+        const res = await logoutAPI();
+        if (res.data) {
+            localStorage.removeItem("access_token");
+            setUser({
+                email: "",
+                phone: "",
+                fullName: "",
+                role: "",
+                avatar: "",
+                id: ""
+            })
+            message.success("Logout done")
+            // redirect to home.
+            navigate("/");
+        }
+    };
+
     const items = [
         {
             label: <Link to={"/"}>Home </Link>,
@@ -42,7 +61,7 @@ const Header = () => {
             icon: <WechatOutlined />,
             children: [
                 {
-                    label: <Link to={"/logout"}>Logout </Link>,
+                    label: <span onClick={() => { handleLogout() }}>Logouttt</span>,
                     key: 'logout',
                 },
             ],
