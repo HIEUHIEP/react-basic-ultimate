@@ -18,13 +18,16 @@ const AuthWrapper = (props) => {
         avatar: "",
         id: ""
     })
+    const [isAppLoading, setIsAppLoading] = useState(true);
     return (
-        <AuthContext.Provider value={{ user, setUser }}>
+        <AuthContext.Provider value={{ user, setUser, isAppLoading, setIsAppLoading }}>
             {props.children}
             {/* props.children chính là <RouterProvider router={router} />  đc truyền từ mail.jsx*/}
         </AuthContext.Provider>
     )
 }
+
+
 
 
 export { AuthContext, AuthWrapper };
