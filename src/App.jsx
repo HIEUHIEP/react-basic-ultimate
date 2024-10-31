@@ -6,14 +6,13 @@ import { Outlet } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
 import { getAccountAPI } from './services/api.service';
 import { AuthContext } from './components/context/auth.context';
-import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
 const App = () => {
   const { setUser, isAppLoading, setIsAppLoading } = useContext(AuthContext);
   const fetchUserInfor = async () => {
     const res = await getAccountAPI();
-    await delay(2000);
+    await delay(1500);
     if (res.data) {
       setUser(res.data.user)
     }
