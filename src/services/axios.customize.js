@@ -1,5 +1,10 @@
 import axios from "axios";
+import NProgress from 'nprogress';
 
+NProgress.configure({
+    showSpinner: false,
+    trickleSpeed: 10,
+});
 
 // Set config defaults when creating the instance
 const instance = axios.create({
@@ -11,6 +16,7 @@ const instance = axios.create({
 
 // Add a request interceptor
 instance.interceptors.request.use(function (config) {
+    NProgress.start();
     if (typeof window !== "undefined" && window && window.localStorage && window.localStorage.getItem('access_token')) {
         config.headers.Authorization = 'Bearer ' + window.localStorage.getItem('access_token');
         // config.headers['authorization'] = `Bearer ${window.localStorage.getItem('access_token')}`; cách code thứ 2
@@ -19,6 +25,8 @@ instance.interceptors.request.use(function (config) {
     // Do something before request is sent
     return config;
 }, function (error) {
+    NProgress.done();
+
     // Do something with request error
     return Promise.reject(error);
 });
@@ -28,6 +36,7 @@ instance.interceptors.request.use(function (config) {
 instance.interceptors.response.use(function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
+    NProgress.done();
     if (response.data && response.data.data) {
         return response.data;
     }
@@ -39,6 +48,7 @@ instance.interceptors.response.use(function (response) {
     if (error.response && error.response.data) {
         return error.response.data;
     }
+    NProgress.done();
     return Promise.reject(error);
 });
 
