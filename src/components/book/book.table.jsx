@@ -6,10 +6,13 @@ import BookDetail from "./book.detail";
 import { deleteBookAPI } from "../../services/api.service";
 
 const BookTable = (props) => {
-    const { current, setCurrent, pageSize, setPageSize, total, dataBooks, getDataBooks, setIsModalUpdateBookOpen, setDataBookUpdate } = props;
+    const { current, setCurrent, pageSize, setPageSize, total, dataBooks, getDataBooks, setIsModalUpdateBookOpen, setDataBookUpdate, loadingTable } = props;
 
     const [isOpenDetailBook, setIsOpenDetailBook] = useState(false);
     const [dataBook, setDataBook] = useState(null);
+
+
+
     const onChange = (pagination, filters, sorter, extra) => {
         console.log({ pagination, filters, sorter, extra })
         if (+pagination.current !== +current) {
@@ -103,6 +106,7 @@ const BookTable = (props) => {
 
             </div>
             <Table
+                loading={loadingTable} // loading icon on button
                 dataSource={dataBooks}
                 columns={columns}
                 rowKey={"_id"}

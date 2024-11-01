@@ -14,12 +14,14 @@ const BookPage = () => {
     const [isModalAddBookOpen, setIsModalAddBookOpen] = useState(false);
     const [isModalUpdateBookOpen, setIsModalUpdateBookOpen] = useState(false);
     const [dataBookUpdate, setDataBookUpdate] = useState({});
+    const [loadingTable, setLoadingTable] = useState(false);
 
     useEffect(() => {
         getDataBooks();
     }, [current, pageSize])
 
     const getDataBooks = async () => {
+        setLoadingTable(true);
         const res = await fetchAllBookAPI(current, pageSize);
         if (res.data.result) {
             setCurrent(res.data.meta.current);
@@ -27,6 +29,7 @@ const BookPage = () => {
             setTotal(res.data.meta.total);
         }
         setDataBooks(res.data.result);
+        setLoadingTable(false);
     }
 
     return (
@@ -40,6 +43,7 @@ const BookPage = () => {
                 > Create book </Button>
             </div>
             <BookTable
+                loadingTable={loadingTable}
                 setDataBookUpdate={setDataBookUpdate}
                 dataBooks={dataBooks}
                 getDataBooks={getDataBooks}

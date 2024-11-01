@@ -12,7 +12,7 @@ const App = () => {
   const { setUser, isAppLoading, setIsAppLoading } = useContext(AuthContext);
   const fetchUserInfor = async () => {
     const res = await getAccountAPI();
-    await delay(1500);
+    await delay(1000);
     if (res.data) {
       setUser(res.data.user)
     }
